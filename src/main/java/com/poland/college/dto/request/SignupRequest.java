@@ -28,5 +28,5 @@ public class SignupRequest {
 
     @NotBlank
     @Size(min = 4, max = 20)
-    private String password;
+    private String pass;
 }
