@@ -6,15 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+@AllArgsConstructor
+public class InfoRequest {
     @NotBlank
-    private String email;
-
-    @NotBlank
-    private String pass;
+    private String id;
+    private Double fee;
+    private String info;
+    private LocalDate start;
+    private LocalDate end;
 }

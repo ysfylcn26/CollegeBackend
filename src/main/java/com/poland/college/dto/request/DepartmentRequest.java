@@ -1,29 +1,27 @@
 package com.poland.college.dto.request;
 
+import com.poland.college.entity.enums.Degree;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class SignupRequest {
+@AllArgsConstructor
+public class DepartmentRequest {
 
     @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
-
-    private Set<String> role;
+    private String college;
 
     @NotBlank
-    @Size(min = 4, max = 20)
-    private String pass;
+    @Size(max = 300)
+    private String department;
+
+    private Degree degree;
 }
