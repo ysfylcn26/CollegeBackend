@@ -16,4 +16,5 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
     Integer deleteByUuid(String uuid);
 
     Optional<Country> findByUuid(String uuid);
+
 }

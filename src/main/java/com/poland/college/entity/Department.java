@@ -21,7 +21,7 @@ public class Department extends BaseEntitiy{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @NotBlank
     @Size(max = 300)
@@ -37,6 +37,7 @@ public class Department extends BaseEntitiy{
 
     private LocalDate start;
 
+    @Column(name = "finish")
     private LocalDate end;
 
     @Enumerated(EnumType.STRING)

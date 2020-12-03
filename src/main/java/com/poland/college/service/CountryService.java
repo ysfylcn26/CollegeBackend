@@ -35,7 +35,7 @@ public class CountryService {
     @Transactional
     public List<CountryResponse> getAll() {
         List<CountryResponse> countries = countryRepository.findAll().stream().map(data -> {
-            return new CountryResponse().builder().id(data.getUuid().toString()).name(data.getName()).build();
+            return new CountryResponse().builder().id(data.getUuid()).name(data.getName()).build();
         }).collect(Collectors.toList());
         return countries;
     }

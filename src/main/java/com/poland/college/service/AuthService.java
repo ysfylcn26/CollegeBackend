@@ -12,6 +12,7 @@ import com.poland.college.repository.UserRepository;
 import com.poland.college.security.JwtUtils;
 import com.poland.college.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,9 +20,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,7 +47,7 @@ public class AuthService {
     JwtUtils jwtUtils;
 
     @Transactional
-    public JwtResponse signIn(LoginRequest loginRequest){
+    public JwtResponse signIn(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPass()));
 
@@ -55,54 +58,29 @@ public class AuthService {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        return new JwtResponse(jwt,
-                userDetails.getId(),
+        return new JwtResponse(jwt, null,
                 userDetails.getEmail(),
                 roles.get(0));
     }
 
     @Transactional
-    public MessageResponse signUp(SignupRequest signUpRequest){
+    public MessageResponse signUp(SignupRequest signUpRequest) {
         User user = new User();
         user.setEmail(signUpRequest.getEmail());
         user.setEmail(signUpRequest.getEmail());
         user.setPass(encoder.encode(signUpRequest.getPass()));
 
-        Set<String> strRoles = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
+        Role role = roleRepository.findByName(ERole.valueOf(signUpRequest.getRole())).orElseThrow(() -> {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "We cannot find this role");
+        });
 
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "ROLE_ADMIN":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-                        break;
-                    case "ROLE_SUPER_ADMIN":
-                        Role superAdminRole = roleRepository.findByName(ERole.ROLE_SUPER_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(superAdminRole);
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-                }
-            });
-        }
-
-        user.setRoles(roles);
+        user.setRole(role);
         userRepository.save(user);
 
         return new MessageResponse("User registered successfully!");
     }
 
-    public boolean existEmail(String email){
+    public boolean existEmail(String email) {
         return userRepository.existsByEmail(email);
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="yusuf-yalcin" id="roles">
+        <insert schemaName="public"
+                tableName="roles">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="roles">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="roles">
+            <column name="id" value="3"/>
+            <column name="name" value="ROLE_SUPER_ADMIN"/>
+        </insert>
+        <insert schemaName="public"
+                tableName="users">
+            <column name="id" value="1"/>
+            <column name="uuid" value="64bd8f8f-0966-450b-92a9-f6d1b1041432"/>
+            <column name="email" value="admin@eduwise"/>
+            <column name="pass" value="$2a$10$kJeR1/.MRzz6.7QVxk6ImeCRJFEfkX/wfG3o0T1tCp6CvxWcb6cla"/>
+            <column name="user_role" value="3"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

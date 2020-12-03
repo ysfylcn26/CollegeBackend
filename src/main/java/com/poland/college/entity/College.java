@@ -22,7 +22,7 @@ public class College extends BaseEntitiy{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @NotBlank
     @Size(max = 300)
