@@ -1,7 +1,5 @@
 package com.poland.college.config;
 
-import liquibase.Liquibase;
-import liquibase.configuration.LiquibaseConfiguration;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
