@@ -26,7 +26,6 @@ public class CollegeController {
     }
 
     @GetMapping("/{country}")
-    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     public ResponseEntity<?> getColleges(@PathVariable(name = "country") String country){
         return ResponseEntity.ok().body(collegeService.getColleges(country));
     }

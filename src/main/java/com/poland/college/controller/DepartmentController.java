@@ -29,7 +29,6 @@ public class DepartmentController {
     }
 
     @GetMapping("/{college}")
-    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     public ResponseEntity<List<DepartmentResponse>> getDepartment(@PathVariable("college") String college){
         return ResponseEntity.ok().body(departmentService.getDepartment(college));
     }
@@ -59,7 +58,6 @@ public class DepartmentController {
     }
 
     @GetMapping("/info/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
     public ResponseEntity<InfoResponse> getInfo(@PathVariable("id") String id){
         return ResponseEntity.ok().body(departmentService.getInfo(id));
     }

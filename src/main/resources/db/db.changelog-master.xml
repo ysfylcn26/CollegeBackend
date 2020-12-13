@@ -5,22 +5,22 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet author="yusuf-yalcin" id="roles">
-        <insert schemaName="public"
+        <insert
                 tableName="roles">
             <column name="id" value="1"/>
             <column name="name" value="ROLE_USER"/>
         </insert>
-        <insert schemaName="public"
+        <insert
                 tableName="roles">
             <column name="id" value="2"/>
             <column name="name" value="ROLE_ADMIN"/>
         </insert>
-        <insert schemaName="public"
+        <insert
                 tableName="roles">
             <column name="id" value="3"/>
             <column name="name" value="ROLE_SUPER_ADMIN"/>
         </insert>
-        <insert schemaName="public"
+        <insert
                 tableName="users">
             <column name="id" value="1"/>
             <column name="uuid" value="64bd8f8f-0966-450b-92a9-f6d1b1041432"/>

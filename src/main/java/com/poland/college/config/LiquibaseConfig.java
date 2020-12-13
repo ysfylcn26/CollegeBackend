@@ -1,30 +1,35 @@
 package com.poland.college.config;
 
 import liquibase.integration.spring.SpringLiquibase;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.web.config.PageableHandlerMethodArgumentResolverCustomizer;
 
 import javax.sql.DataSource;
 
 @Configuration
+@RequiredArgsConstructor
 public class LiquibaseConfig implements CommandLineRunner {
-
-    @Autowired
-    private DataSource dataSource;
+    @Bean
+    public PageableHandlerMethodArgumentResolverCustomizer customize() {
+        return p -> p.setOneIndexedParameters(true);
+    }
+    private final DataSource dataSource;
 
     @Bean
-    public LiquibaseProperties liquibaseProperties() {
+    public LiquibaseProperties liquibaseCollegeProperties(){
         return new LiquibaseProperties();
     }
 
+
     @Bean
     @DependsOn(value = "entityManagerFactory")
-    public SpringLiquibase liquibase() {
-        LiquibaseProperties liquibaseProperties = liquibaseProperties();
+    public SpringLiquibase liquibaseCollege() {
+        LiquibaseProperties liquibaseProperties = liquibaseCollegeProperties();
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:/db/db.changelog-master.xml");
         liquibase.setContexts(liquibaseProperties.getContexts());
@@ -36,11 +41,10 @@ public class LiquibaseConfig implements CommandLineRunner {
         return liquibase;
     }
 
-    @Autowired
-    public SpringLiquibase liquibase;
 
     @Override
     public void run(String... args) throws Exception {
+        SpringLiquibase liquibase = liquibaseCollege();
         liquibase.setShouldRun(true);
         liquibase.afterPropertiesSet();
     }
